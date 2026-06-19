@@ -1,0 +1,118 @@
+---
+import { languages, defaultLang } from '../i18n';
+
+const currentPath = Astro.url.pathname;
+const segments = currentPath.split('/').filter(Boolean);
+const currentLang = segments[0] === 'zh' ? 'zh' : (segments[0] === 'en' ? 'en' : null);
+const lang = currentLang || defaultLang;
+---
+
+<div class="language-switcher">
+	<div class="switcher-buttons">
+		<button
+			class:list={['lang-btn', { active: lang === 'zh' }]}
+			data-lang="zh"
+			aria-label="切换到中文"
+		>
+			中文
+		</button>
+		<span class="divider">|</span>
+		<button
+			class:list={['lang-btn', { active: lang === 'en' }]}
+			data-lang="en"
+			aria-label="Switch to English"
+		>
+			EN
+		</button>
+	</div>
+</div>
+
+<script>
+	function getBrowserLang() {
+		const browserLang = navigator.language || navigator.userLanguage;
+		return browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+	}
+
+	function initLanguageSwitcher() {
+		// Auto-set language based on browser on first visit
+		if (!localStorage.getItem('language')) {
+			const browserLang = getBrowserLang();
+			localStorage.setItem('language', browserLang);
+		}
+
+		const buttons = document.querySelectorAll('.lang-btn');
+		buttons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const targetLang = btn.getAttribute('data-lang');
+				if (!targetLang) return;
+
+				localStorage.setItem('language', targetLang);
+
+				// Get current path and replace language prefix
+				const currentPath = window.location.pathname;
+				const segments = currentPath.split('/').filter(Boolean);
+				let newPath;
+
+				if (segments.length === 0) {
+					// Root path - redirect to /zh/ or /en/
+					newPath = targetLang === 'en' ? '/' : '/' + targetLang + '/';
+				} else if (segments[0] === 'zh' || segments[0] === 'en') {
+					// Language prefix exists, replace it
+					if (targetLang === 'en') {
+						newPath = '/' + segments.slice(1).join('/') || '/';
+					} else {
+						newPath = '/' + targetLang + '/' + segments.slice(1).join('/');
+					}
+				} else {
+					// No language prefix, add one
+					newPath = '/' + targetLang + '/' + segments.join('/');
+				}
+
+				// Ensure trailing slash for consistency
+				if (!newPath.endsWith('/') && !newPath.match(/\.[^/]+$/)) {
+					newPath += '/';
+				}
+
+				window.location.href = newPath || '/';
+			});
+		});
+	}
+
+	initLanguageSwitcher();
+	document.addEventListener('astro:after-swap', initLanguageSwitcher);
+</script>
+
+<style>
+	.language-switcher {
+		display: flex;
+		align-items: center;
+	}
+
+	.switcher-buttons {
+		display: flex;
+		align-items: center;
+		gap: 0.25em;
+		font-size: 0.875rem;
+	}
+
+	.lang-btn {
+		color: var(--black);
+		text-decoration: none;
+		padding: 0.25em 0.5em;
+		border-radius: 4px;
+		transition: background-color 0.2s ease;
+	}
+
+	.lang-btn:hover {
+		background-color: rgba(var(--black), 5%);
+	}
+
+	.lang-btn.active {
+		font-weight: bold;
+		color: var(--accent);
+	}
+
+	.divider {
+		color: var(--gray);
+	}
+</style>

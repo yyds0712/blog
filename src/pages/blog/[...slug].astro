@@ -1,21 +1,43 @@
 ---
+// Redirect to language-specific pages
 import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { render } from 'astro:content';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
+
+	// Redirect all old blog paths to the new language routes
+	return posts.map(post => ({
 		params: { slug: post.id },
-		props: post,
+		props: { slug: post.id },
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+const { slug } = Astro.params;
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Redirecting...</title>
+	<script is:inline>
+		(function() {
+			const stored = localStorage.getItem('language');
+			let targetLang = stored;
+
+			if (!targetLang) {
+				const browserLang = navigator.language || navigator.userLanguage;
+				targetLang = browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+			}
+
+			const slug = window.location.pathname.split('/').filter(Boolean).pop();
+			const langPath = targetLang === 'en' ? '/en/blog/' : '/' + targetLang + '/blog/';
+			window.location.href = langPath + slug + '/';
+		})();
+	</script>
+</head>
+<body>
+	<p>Redirecting...</p>
+</body>
+</html>
