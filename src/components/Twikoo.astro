@@ -1,0 +1,28 @@
+---
+// Twikoo comment system component
+// https://twikoo.js.org/
+---
+
+<section class="twikoo-wrapper">
+	<h2 class="comments-title">Comments</h2>
+	<div id="tcomment"></div>
+	<script is:inline>
+		const TWIKOO_ENV_ID = localStorage.getItem('twikoo_env_id') || 'https://twikoo.your-domain.workers.dev';
+	</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js"
+		onload="twikoo.init({ envId: TWIKOO_ENV_ID, el: '#tcomment' })"
+		defer
+	></script>
+</section>
+
+<style>
+	.twikoo-wrapper {
+		margin-top: 3em;
+		padding-top: 2em;
+		border-top: 1px solid var(--color-border);
+	}
+	.comments-title {
+		margin-bottom: 1em;
+	}
+</style>
