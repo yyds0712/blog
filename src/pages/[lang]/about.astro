@@ -12,54 +12,26 @@ const { lang } = Astro.params;
 const t = useTranslations(lang);
 
 const aboutTitle = lang === 'zh' ? '关于我' : 'About Me';
-const aboutDescription = lang === 'zh' ? '个人简介' : 'Lorem ipsum dolor sit amet';
+const aboutDescription = lang === 'zh' ? '一名大学生在 AI 时代的生活记录' : 'A college student in the AI era';
 ---
 
 <Layout
 	title={aboutTitle}
 	description={aboutDescription}
-	pubDate={new Date('August 08 2021')}
+	pubDate={new Date('June 19 2026')}
 	heroImage="/blog-placeholder-about.jpg"
 >
 	{lang === 'zh' ? (
 		<>
-			<p>
-				您好！我是一位热爱技术的开发者。我喜欢使用现代技术栈来构建高效、美观的应用程序。
-				这个博客是用来分享我的技术见解、项目经验和学习心得的。
-			</p>
-			<p>
-				我热衷于探索新技术，特别是在Web开发领域。无论是前端框架、后端架构还是云部署，
-				我都很乐意尝试和学习。
-			</p>
-			<p>
-				在这个博客中，我会分享关于编程、Web开发、云原生应用等技术主题的文章。
-				如果您有任何问题或建议，欢迎随时联系我！
-			</p>
-			<p>
-				感谢您访问我的博客，希望我的分享对您有所帮助。
-			</p>
+			<p>你好，我是 yyds0712，一名大学生。</p>
+			<p>这个网站记录了我的生活、学习和思考。在 AI 时代，我想做一个真实的人，分享真实的内容。</p>
+			<p>如果你也有兴趣，欢迎通过 GitHub 与我联系。</p>
 		</>
 	) : (
 		<>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-				labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-				viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-				adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-				et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-				vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-				sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-			</p>
-			<p>
-				Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-				tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-				blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-				porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-				massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-				Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-				bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-				massa massa ultricies mi.
-			</p>
+			<p>Hi, I'm yyds0712, a college student.</p>
+			<p>This site is where I document my life, studies, and thoughts. In the age of AI, I want to be a real person sharing real content.</p>
+			<p>Feel free to reach out on GitHub if you're interested.</p>
 		</>
 	)}
 </Layout>
