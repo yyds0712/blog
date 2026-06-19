@@ -1,7 +1,8 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { SITE_TITLE, getLangFromUrl, useTranslations } from '../i18n';
+import { SITE_TITLE } from '../consts';
+import { getLangFromUrl, useTranslations } from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
